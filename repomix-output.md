@@ -388,112 +388,6 @@ export default function ContactPage() {
 }
 ````
 
-## File: app/globals.css
-````css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --shell-px: clamp(20px, 5vw, 44px);
-}
-
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-  body {
-    @apply bg-white text-ink font-sans antialiased;
-    text-rendering: optimizeLegibility;
-  }
-  ::selection {
-    background: theme("colors.brand.600");
-    color: #fff;
-  }
-  :focus-visible {
-    outline: 2px solid theme("colors.brand.500");
-    outline-offset: 3px;
-    border-radius: 6px;
-  }
-  h1, h2, h3 {
-    @apply font-display tracking-tight;
-  }
-}
-
-@layer components {
-  .shell {
-    @apply mx-auto w-full max-w-shell;
-    padding-left: var(--shell-px);
-    padding-right: var(--shell-px);
-  }
-
-  .eyebrow {
-    @apply inline-flex items-center gap-2.5 text-xs font-700 uppercase tracking-[0.18em] text-brand-600;
-  }
-  .eyebrow::before {
-    content: "";
-    @apply h-1.5 w-1.5 rounded-full bg-brand-500;
-  }
-  .eyebrow-light {
-    @apply text-brand-100;
-  }
-  .eyebrow-light::before {
-    @apply bg-brand-200;
-  }
-
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full text-[0.92rem] font-600 transition-all duration-200;
-  }
-  .btn-primary {
-    @apply btn bg-brand-600 px-7 py-3.5 text-white shadow-soft hover:bg-brand-700 hover:shadow-lift;
-  }
-  .btn-soft {
-    @apply btn border border-hairline bg-white px-7 py-3.5 text-ink hover:border-brand-200 hover:bg-brand-50;
-  }
-  .btn-ghost {
-    @apply btn border border-white/35 px-7 py-3.5 text-white hover:bg-white hover:text-brand-700;
-  }
-
-  .card {
-    @apply rounded-4xl border border-hairline bg-white shadow-card;
-  }
-}
-
-@layer utilities {
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .reveal.is-visible {
-    opacity: 1;
-    transform: none;
-  }
-  .brand-gradient {
-    background-image: linear-gradient(135deg, #2C5DA8 0%, #244C8A 55%, #1E3F70 100%);
-  }
-  .soft-dots {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1.4px, transparent 1.4px);
-    background-size: 26px 26px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .reveal {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-  .animate-float {
-    animation: none !important;
-  }
-}
-````
-
 ## File: app/industries/page.tsx
 ````typescript
 import type { Metadata } from "next";
@@ -1175,421 +1069,6 @@ export default function Footer() {
 }
 ````
 
-## File: components/GISDashboard.tsx
-````typescript
-export default function GISDashboard() {
-  return (
-    <div className="overflow-hidden rounded-4xl border border-hairline bg-white shadow-lift">
-      {/* window chrome */}
-      <div className="flex items-center gap-2 border-b border-hairline bg-brand-50 px-5 py-3.5">
-        <span className="h-3 w-3 rounded-full bg-[#E0524A]" />
-        <span className="h-3 w-3 rounded-full bg-[#E8B84A]" />
-        <span className="h-3 w-3 rounded-full bg-[#3FA66A]" />
-        <span className="ml-3 text-[0.68rem] font-600 text-muted">
-          gis.nim-platform · Beneficiary Console
-        </span>
-      </div>
-
-      <div className="grid grid-cols-[130px_1fr] sm:grid-cols-[160px_1fr]">
-        {/* sidebar */}
-        <aside className="hidden flex-col gap-1.5 bg-brand-700 p-4 sm:flex">
-          <div className="mb-3 text-[0.62rem] font-700 uppercase tracking-[0.16em] text-brand-200">
-            GIS · Admin
-          </div>
-          {["Dashboard", "Beneficiaries", "Policies", "Claims", "Payments", "Reports", "Audit Log"].map(
-            (item, i) => (
-              <div
-                key={item}
-                className={`rounded-xl px-3 py-2 text-[0.74rem] font-500 ${
-                  i === 0 ? "bg-white text-brand-700" : "text-brand-100"
-                }`}
-              >
-                {item}
-              </div>
-            )
-          )}
-        </aside>
-
-        {/* main */}
-        <div className="bg-[#F7FAFE] p-5 sm:p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="text-sm font-700 text-ink">Scheme Overview</div>
-              <div className="text-[0.66rem] text-muted">
-                Buldhana District · FY 2025–26
-              </div>
-            </div>
-            <div className="rounded-full bg-brand-600 px-3 py-1 text-[0.6rem] font-600 text-white">
-              ● LIVE
-            </div>
-          </div>
-
-          <div className="mt-5 grid grid-cols-3 gap-3">
-            {[
-              { k: "Beneficiaries", v: "48,210" },
-              { k: "Active Policies", v: "39,884" },
-              { k: "Claims (mo.)", v: "1,127" },
-            ].map((c) => (
-              <div key={c.k} className="rounded-2xl border border-hairline bg-white p-3">
-                <div className="text-base font-800 text-brand-700">{c.v}</div>
-                <div className="mt-0.5 text-[0.58rem] font-600 uppercase tracking-wide text-muted">
-                  {c.k}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-4 overflow-hidden rounded-2xl border border-hairline bg-white">
-            <div className="grid grid-cols-[1fr_1fr_auto] gap-2 border-b border-hairline px-4 py-2.5 text-[0.58rem] font-700 uppercase tracking-wide text-muted">
-              <span>Beneficiary</span>
-              <span>Policy</span>
-              <span>Status</span>
-            </div>
-            {[
-              { n: "R. Pawar", p: "GIS-HEALTH", s: "Approved", ok: true },
-              { n: "S. Deshmukh", p: "GIS-CROP", s: "In review", ok: false },
-              { n: "A. Khan", p: "GIS-HEALTH", s: "Approved", ok: true },
-            ].map((row) => (
-              <div
-                key={row.n}
-                className="grid grid-cols-[1fr_1fr_auto] items-center gap-2 border-b border-hairline px-4 py-2.5 text-[0.72rem] text-ink last:border-0"
-              >
-                <span className="font-600">{row.n}</span>
-                <span className="text-[0.64rem] text-muted">{row.p}</span>
-                <span
-                  className={`text-[0.6rem] font-600 ${
-                    row.ok ? "text-[#2F8F57]" : "text-brand-500"
-                  }`}
-                >
-                  ● {row.s}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-````
-
-## File: components/home/Hero.tsx
-````typescript
-"use client";
-
-import Link from "next/link";
-import { useEffect, useRef } from "react";
-import { ArrowRight } from "lucide-react";
-import { company, stats } from "@/lib/data";
-import HeroScene from "./HeroScene";
-
-export default function Hero() {
-  const root = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    let ctx: { revert: () => void } | undefined;
-    let active = true;
-
-    (async () => {
-      const { gsap } = await import("gsap");
-      if (!active) return;
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduce) return;
-
-      ctx = gsap.context(() => {
-        const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 0.8 } });
-        tl.from("[data-h='eyebrow']", { y: 18, opacity: 0 })
-          .from("[data-h='line']", { y: 30, opacity: 0, stagger: 0.12 }, "-=0.4")
-          .from("[data-h='intro']", { y: 18, opacity: 0 }, "-=0.5")
-          .from("[data-h='cta'] > *", { y: 16, opacity: 0, stagger: 0.1 }, "-=0.5")
-          .from("[data-h='scene']", { opacity: 0, scale: 0.92, duration: 1.1 }, "-=0.95")
-          .from("[data-h='stat']", { y: 22, opacity: 0, stagger: 0.09 }, "-=0.7");
-      }, root);
-    })();
-
-    return () => {
-      active = false;
-      ctx?.revert();
-    };
-  }, []);
-
-  return (
-    <section ref={root} className="relative overflow-hidden brand-gradient text-white">
-      <div className="pointer-events-none absolute inset-0 soft-dots opacity-50" aria-hidden />
-      <div
-        className="pointer-events-none absolute -right-32 top-10 h-96 w-96 rounded-full bg-white/10 blur-3xl animate-float"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-brand-400/30 blur-3xl"
-        aria-hidden
-      />
-
-      <div className="shell relative pb-24 pt-36 sm:pt-40">
-        <div className="grid items-center gap-10 lg:grid-cols-12">
-          {/* copy */}
-          <div className="lg:col-span-6">
-            <span data-h="eyebrow" className="eyebrow eyebrow-light">
-              Government &amp; Enterprise Software
-            </span>
-
-            <h1 className="mt-6 text-[2.6rem] font-800 leading-[1.05] sm:text-5xl lg:text-[3.7rem]">
-              <span data-h="line" className="block">
-                Software that serves
-              </span>
-              <span data-h="line" className="block text-brand-200">
-                government and business.
-              </span>
-            </h1>
-
-            <p data-h="intro" className="mt-7 max-w-xl text-lg leading-relaxed text-brand-100">
-              {company.shortName} designs and delivers custom systems for public
-              bodies and private companies — from a Government Insurance Scheme
-              platform live across five cities to the software your organisation
-              runs on every day.
-            </p>
-
-            <div data-h="cta" className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <Link
-                href="/contact"
-                className="btn bg-white px-8 py-4 text-brand-700 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-brand-50"
-              >
-                Start a project <ArrowRight size={17} />
-              </Link>
-              <Link
-                href="/work"
-                className="btn-ghost px-8 py-4 transition-transform duration-200 hover:-translate-y-0.5"
-              >
-                See our work
-              </Link>
-            </div>
-          </div>
-
-          {/* 3D scene fills what used to be empty space */}
-          <div data-h="scene" className="lg:col-span-6">
-            <div className="relative mx-auto h-[320px] w-full max-w-[520px] sm:h-[420px] lg:h-[500px]">
-              <div
-                className="pointer-events-none absolute inset-6 rounded-full bg-white/10 blur-3xl"
-                aria-hidden
-              />
-              <HeroScene />
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-16 grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {stats.map((s) => (
-            <div
-              key={s.label}
-              data-h="stat"
-              className="rounded-3xl border border-white/15 bg-white/10 p-6 backdrop-blur-sm transition-all duration-200 hover:-translate-y-1 hover:border-white/30 hover:bg-white/15"
-            >
-              <div className="text-3xl font-800 text-white">{s.value}</div>
-              <div className="mt-2 text-sm leading-snug text-brand-100">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="absolute inset-x-0 bottom-0 h-12 rounded-t-[2.5rem] bg-white" aria-hidden />
-    </section>
-  );
-}
-````
-
-## File: components/home/HeroScene.tsx
-````typescript
-"use client";
-
-import { useEffect, useRef } from "react";
-
-/**
- * Lightweight three.js scene for the hero: a rotating wireframe icosahedron
- * wrapped in a particle shell, with 5 glowing "city" nodes connected in a ring
- * — a nod to the GIS platform running across five cities.
- *
- * - three is dynamically imported inside the effect (kept out of SSR / code-split).
- * - Respects prefers-reduced-motion (renders a single static frame).
- * - Pointer parallax on fine-pointer devices.
- * - Everything is disposed on unmount to avoid WebGL context leaks.
- */
-export default function HeroScene() {
-  const mountRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const mount = mountRef.current;
-    if (!mount) return;
-
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    let renderer: any = null;
-    let frameId = 0;
-    let disposed = false;
-    const cleanups: Array<() => void> = [];
-
-    (async () => {
-      const THREE = await import("three");
-      if (disposed) return;
-
-      const width = mount.clientWidth || 1;
-      const height = mount.clientHeight || 1;
-
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-      camera.position.set(0, 0, 6.4);
-
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.domElement.style.display = "block";
-      mount.appendChild(renderer.domElement);
-
-      const pivot = new THREE.Group(); // parallax
-      const spin = new THREE.Group(); // continuous rotation
-      pivot.add(spin);
-      scene.add(pivot);
-      spin.rotation.x = 0.35;
-
-      // faint solid core
-      const core = new THREE.Mesh(
-        new THREE.IcosahedronGeometry(1.8, 1),
-        new THREE.MeshBasicMaterial({ color: 0x2c5da8, transparent: true, opacity: 0.16 })
-      );
-      spin.add(core);
-
-      // wireframe
-      const wire = new THREE.LineSegments(
-        new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.85, 1)),
-        new THREE.LineBasicMaterial({ color: 0x9cc0ef, transparent: true, opacity: 0.5 })
-      );
-      spin.add(wire);
-
-      // particle shell
-      const COUNT = 650;
-      const positions = new Float32Array(COUNT * 3);
-      for (let i = 0; i < COUNT; i++) {
-        const r = 2.5 + Math.random() * 0.55;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos(2 * Math.random() - 1);
-        positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
-        positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-        positions[i * 3 + 2] = r * Math.cos(phi);
-      }
-      const ptsGeo = new THREE.BufferGeometry();
-      ptsGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      const points = new THREE.Points(
-        ptsGeo,
-        new THREE.PointsMaterial({
-          color: 0xdce8f8,
-          size: 0.035,
-          transparent: true,
-          opacity: 0.85,
-          sizeAttenuation: true,
-        })
-      );
-      spin.add(points);
-
-      // 5 city nodes
-      const nodes: any[] = [];
-      const nodeGeo = new THREE.SphereGeometry(0.07, 16, 16);
-      const nodeMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-      const seeds = [
-        [1.8, 0.3, 0.4],
-        [-1.1, 1.3, 0.8],
-        [0.4, -1.6, 0.9],
-        [-1.4, -0.5, -1.1],
-        [0.9, 0.8, -1.5],
-      ];
-      seeds.forEach((s) => {
-        const m = new THREE.Mesh(nodeGeo, nodeMat);
-        m.position.set(s[0], s[1], s[2]).setLength(1.85);
-        spin.add(m);
-        nodes.push(m);
-      });
-
-      // ring connecting the nodes
-      const linePts: number[] = [];
-      for (let i = 0; i < nodes.length; i++) {
-        const a = nodes[i].position;
-        const b = nodes[(i + 1) % nodes.length].position;
-        linePts.push(a.x, a.y, a.z, b.x, b.y, b.z);
-      }
-      const lineGeo = new THREE.BufferGeometry();
-      lineGeo.setAttribute("position", new THREE.Float32BufferAttribute(linePts, 3));
-      const lines = new THREE.LineSegments(
-        lineGeo,
-        new THREE.LineBasicMaterial({ color: 0xbfd6f5, transparent: true, opacity: 0.55 })
-      );
-      spin.add(lines);
-
-      // pointer parallax
-      const target = { x: 0, y: 0 };
-      if (!reduce) {
-        const onMove = (e: PointerEvent) => {
-          const rect = mount.getBoundingClientRect();
-          target.x = ((e.clientX - rect.left) / rect.width - 0.5) * 0.7;
-          target.y = ((e.clientY - rect.top) / rect.height - 0.5) * 0.7;
-        };
-        window.addEventListener("pointermove", onMove);
-        cleanups.push(() => window.removeEventListener("pointermove", onMove));
-      }
-
-      const onResize = () => {
-        const w = mount.clientWidth || 1;
-        const h = mount.clientHeight || 1;
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
-      };
-      window.addEventListener("resize", onResize);
-      cleanups.push(() => window.removeEventListener("resize", onResize));
-
-      const clock = new THREE.Clock();
-      const render = () => renderer.render(scene, camera);
-
-      if (reduce) {
-        render();
-      } else {
-        const loop = () => {
-          frameId = requestAnimationFrame(loop);
-          const t = clock.getElapsedTime();
-          spin.rotation.y += 0.0018;
-          pivot.rotation.x += (target.y * 0.5 - pivot.rotation.x) * 0.05;
-          pivot.rotation.y += (target.x * 0.5 - pivot.rotation.y) * 0.05;
-          nodes.forEach((m, i) => m.scale.setScalar(1 + Math.sin(t * 2 + i) * 0.28));
-          render();
-        };
-        loop();
-      }
-
-      // dispose helpers
-      cleanups.push(() => {
-        scene.traverse((obj: any) => {
-          if (obj.geometry) obj.geometry.dispose();
-          if (obj.material) {
-            const m = obj.material;
-            Array.isArray(m) ? m.forEach((x: any) => x.dispose()) : m.dispose();
-          }
-        });
-      });
-    })();
-
-    return () => {
-      disposed = true;
-      cancelAnimationFrame(frameId);
-      cleanups.forEach((fn) => fn());
-      if (renderer) {
-        renderer.dispose();
-        const el = renderer.domElement;
-        if (el && el.parentNode) el.parentNode.removeChild(el);
-      }
-    };
-  }, []);
-
-  return <div ref={mountRef} className="h-full w-full" aria-hidden />;
-}
-````
-
 ## File: components/Logo.tsx
 ````typescript
 /**
@@ -1913,89 +1392,6 @@ export default function Reveal({
     >
       {children}
     </div>
-  );
-}
-````
-
-## File: components/ui/CTABand.tsx
-````typescript
-import Link from "next/link";
-import Reveal from "@/components/Reveal";
-
-export default function CTABand({
-  title = "Have a system in mind?",
-  text = "Tell us what you need built. We will get back to you with a clear, honest plan.",
-}: {
-  title?: string;
-  text?: string;
-}) {
-  return (
-    <section className="bg-white py-20 sm:py-24">
-      <div className="shell">
-        <Reveal>
-          <div className="relative overflow-hidden rounded-5xl brand-gradient px-8 py-14 text-center text-white shadow-lift sm:px-16 sm:py-20">
-            <div className="pointer-events-none absolute inset-0 soft-dots opacity-40" aria-hidden />
-            <div className="relative mx-auto max-w-2xl">
-              <h2 className="text-3xl font-700 leading-tight sm:text-4xl">
-                {title}
-              </h2>
-              <p className="mt-5 text-lg text-brand-100">{text}</p>
-              <div className="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <Link href="/contact" className="btn bg-white px-8 py-4 text-brand-700 hover:bg-brand-50">
-                  Start a project
-                </Link>
-                <Link href="/work" className="btn-ghost px-8 py-4">
-                  See our work
-                </Link>
-              </div>
-            </div>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-````
-
-## File: components/ui/PageHeader.tsx
-````typescript
-import Reveal from "@/components/Reveal";
-
-export default function PageHeader({
-  eyebrow,
-  title,
-  intro,
-}: {
-  eyebrow: string;
-  title: string;
-  intro?: string;
-}) {
-  return (
-    <header className="relative overflow-hidden brand-gradient text-white">
-      <div className="pointer-events-none absolute inset-0 soft-dots opacity-50" aria-hidden />
-      <div
-        className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-white/10 blur-3xl"
-        aria-hidden
-      />
-      <div className="shell relative pb-20 pt-36 sm:pb-24 sm:pt-40">
-        <Reveal className="max-w-3xl">
-          <span className="eyebrow eyebrow-light">{eyebrow}</span>
-          <h1 className="mt-5 text-4xl font-800 leading-[1.08] sm:text-5xl lg:text-6xl">
-            {title}
-          </h1>
-          {intro && (
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-brand-100">
-              {intro}
-            </p>
-          )}
-        </Reveal>
-      </div>
-      {/* smooth curved base */}
-      <div
-        className="absolute inset-x-0 bottom-0 h-10 rounded-t-[2.5rem] bg-white"
-        aria-hidden
-      />
-    </header>
   );
 }
 ````
@@ -2372,8 +1768,28 @@ export default config;
 ````markdown
 # NIM Technology Solutions — Website
 
-A multi-page marketing site for **NIM Technology Solutions**, built with
-**Next.js (App Router) + TypeScript + Tailwind CSS**.
+Marketing website for **NIM Technology Solutions**, a software company building
+custom systems for government bodies and private enterprises. Built with
+**Next.js (App Router)**, **TypeScript**, and **Tailwind CSS**, with light 3D
+and motion accents.
+
+> **Tagline:** *Engineered for quality. Built around service.*
+
+---
+
+## Tech stack
+
+| Layer | Choice |
+|-------|--------|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS 3 |
+| Animation | GSAP (scroll/entrance), CSS reveals |
+| 3D | three.js (hero scene) |
+| Icons | lucide-react |
+| Fonts | Plus Jakarta Sans (display) + Inter (body) via `next/font` |
+
+---
 
 ## Getting started
 
@@ -2384,65 +1800,103 @@ npm install
 npm run dev
 ```
 
-Open <http://localhost:3000>. Production build: `npm run build && npm run start`.
+Open <http://localhost:3000>.
 
-## Design
+```bash
+npm run build && npm run start   # production
+npm run lint                     # lint
+```
 
-- **Palette:** pulled from the brand logo — a corporate blue (`brand-600 = #2C5DA8`)
-  scaled from 50–900, on white, with soft tints. Defined in `tailwind.config.ts`.
+---
+
+## Project structure
+
+```
+app/
+  layout.tsx            Root layout — wraps every page with Navbar + Footer
+  page.tsx              Home (hero + section previews)
+  services/page.tsx     All services + how-we-work
+  work/page.tsx         Project listing
+  work/[slug]/page.tsx  Individual project detail (statically generated)
+  industries/page.tsx   Sectors served
+  about/page.tsx        Company, why us, tech, security, team, testimonials
+  contact/page.tsx      Contact form + details
+  not-found.tsx         404
+  globals.css           Tailwind layers + design tokens/utilities
+
+components/
+  Navbar.tsx            Sticky header, scroll states, magnetic CTA, mobile menu
+  Footer.tsx            Brand-gradient footer
+  Logo.tsx              SVG wordmark (recolors for light/dark surfaces)
+  Reveal.tsx            IntersectionObserver scroll-reveal wrapper
+  ContactForm.tsx       Client form with a marked backend integration point
+  GISDashboard.tsx      Illustrative mock of the GIS admin console
+  home/Hero.tsx         Animated hero
+  home/HeroScene.tsx    three.js wireframe + 5-city node ring
+  ui/                   PageHeader, SectionHeading, CTABand
+
+lib/
+  data.ts               Single source of truth for all site content
+```
+
+Routing follows the App Router convention — each file under `app/` is a route.
+
+---
+
+## Editing content
+
+All copy lives in **`lib/data.ts`** — `company`, `nav`, `stats`, `services`,
+`industries`, `whyUs`, `process`, `technologies`, `commitments`, `testimonials`,
+and `projects`. UI components read from these exports, so content can later be
+swapped for a CMS/database without touching any component.
+
+**Add a project:** append an object to the `projects` array in `lib/data.ts`.
+The `/work` list and its `/work/[slug]` detail page are generated automatically —
+no new files needed.
+
+Other common edits:
+
+- **Contact details** → `company` object in `lib/data.ts`
+- **Brand colors** → `brand` scale in `tailwind.config.ts`
+- **GIS visuals** → `components/GISDashboard.tsx` (replace mock with real screenshots in `public/`)
+- **Testimonials** → currently sample placeholders; replace before launch
+
+---
+
+## Design system
+
+- **Palette** derived from the logo blue (`brand-600 = #2C5DA8`), scaled 50–900,
+  on white with soft tints — defined in `tailwind.config.ts`.
 - **Smooth & rounded:** large corner radii (`rounded-4xl/5xl`), soft shadows,
-  gentle gradients and curved section transitions.
-- **Fonts:** Plus Jakarta Sans (display) + Inter (body), loaded via `next/font`.
-- **Logo:** recreated as crisp SVG in `components/Logo.tsx` (curved
-  "TECHNOLOGY SOLUTIONS" beneath "NIM"), recolorable for light/dark backgrounds.
+  gentle gradients, and curved section transitions.
+- **Reusable utilities** (`.shell`, `.eyebrow`, `.btn-*`, `.card`,
+  `.brand-gradient`) defined in `app/globals.css`.
 
-## Pages (each section is its own route)
-
-```
-/                  Home — hero + previews that link out to full pages
-/services          All services + how-we-work
-/work              Project listing (grows as you add projects)
-/work/[slug]       Individual project detail (e.g. /work/government-insurance-scheme)
-/industries        Sectors served
-/about             Company, why us, technology, security, team, testimonials
-/contact           Contact form + details
-```
-
-Routing lives in the `app/` folder (file = route). `components/Navbar.tsx` and
-`components/Footer.tsx` wrap every page via `app/layout.tsx`.
-
-## Adding content
-
-All text is in **`lib/data.ts`** — services, industries, process, technologies,
-testimonials, and `projects`.
-
-**To add a new project:** append an object to the `projects` array in
-`lib/data.ts`. The `/work` list and its `/work/[slug]` detail page are generated
-automatically — no new files needed.
-
-- **Contact details:** the `company` object at the top of `lib/data.ts`.
-- **Colors:** the `brand` scale in `tailwind.config.ts`.
-- **GIS visuals:** `components/GISDashboard.tsx` is an illustrative mock —
-  replace it with real screenshots when ready (put images in `public/`).
-- **Testimonials:** currently sample placeholders — replace before launch.
+---
 
 ## Adding a backend
 
-The contact form has a marked integration point in
-`components/ContactForm.tsx`. Recommended path:
+The contact form has a marked integration point in `components/ContactForm.tsx`.
+Recommended path:
 
 1. Create `app/api/contact/route.ts` (a Next.js Route Handler).
 2. POST the form data to it; send an email or save to a database.
 3. Replace the `console.log` block in `ContactForm.tsx` with a `fetch` call.
 
-Because content is centralised in `lib/data.ts`, you can later swap those
-exports for database/CMS calls without changing any UI component.
+---
 
-## Notes
+## Accessibility & notes
 
-- Responsive (mobile → desktop), visible keyboard focus, reduced-motion respected.
+- Responsive from mobile to desktop, with visible keyboard focus states.
+- `prefers-reduced-motion` is respected across GSAP, the 3D scene, and CSS reveals.
 - `next.config.mjs` skips ESLint during builds for convenience — remove
-  `eslint.ignoreDuringBuilds` once you set up your own linting.
+  `eslint.ignoreDuringBuilds` once your own CI linting is set up.
+
+---
+
+## License
+
+Proprietary — © NIM Technology Solutions. All rights reserved.
 ````
 
 ## File: tailwind.config.ts
@@ -2540,5 +1994,821 @@ export default config;
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
+}
+````
+
+## File: app/globals.css
+````css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --shell-px: clamp(16px, 5vw, 44px);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  /* Stop any stray full-bleed element from creating a horizontal scrollbar
+     on phones (decorative blur circles, wide grids, etc.). */
+  html,
+  body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  body {
+    @apply bg-white text-ink font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  ::selection {
+    background: theme("colors.brand.600");
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid theme("colors.brand.500");
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  h1, h2, h3 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell;
+    padding-left: var(--shell-px);
+    padding-right: var(--shell-px);
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2.5 text-xs font-700 uppercase tracking-[0.18em] text-brand-600;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply h-1.5 w-1.5 rounded-full bg-brand-500;
+  }
+  .eyebrow-light {
+    @apply text-brand-100;
+  }
+  .eyebrow-light::before {
+    @apply bg-brand-200;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full text-[0.92rem] font-600 transition-all duration-200;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 px-7 py-3.5 text-white shadow-soft hover:bg-brand-700 hover:shadow-lift;
+  }
+  .btn-soft {
+    @apply btn border border-hairline bg-white px-7 py-3.5 text-ink hover:border-brand-200 hover:bg-brand-50;
+  }
+  .btn-ghost {
+    @apply btn border border-white/35 px-7 py-3.5 text-white hover:bg-white hover:text-brand-700;
+  }
+
+  .card {
+    @apply rounded-4xl border border-hairline bg-white shadow-card;
+  }
+}
+
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  .brand-gradient {
+    background-image: linear-gradient(135deg, #2C5DA8 0%, #244C8A 55%, #1E3F70 100%);
+  }
+  .soft-dots {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1.4px, transparent 1.4px);
+    background-size: 26px 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .animate-float {
+    animation: none !important;
+  }
+}
+````
+
+## File: components/GISDashboard.tsx
+````typescript
+export default function GISDashboard() {
+  return (
+    <div className="overflow-hidden rounded-4xl border border-hairline bg-white shadow-lift">
+      {/* window chrome */}
+      <div className="flex items-center gap-2 border-b border-hairline bg-brand-50 px-4 py-3.5 sm:px-5">
+        <span className="h-3 w-3 shrink-0 rounded-full bg-[#E0524A]" />
+        <span className="h-3 w-3 shrink-0 rounded-full bg-[#E8B84A]" />
+        <span className="h-3 w-3 shrink-0 rounded-full bg-[#3FA66A]" />
+        <span className="ml-3 min-w-0 truncate text-[0.68rem] font-600 text-muted">
+          gis.nim-platform · Beneficiary Console
+        </span>
+      </div>
+
+      {/* On mobile this is a single column; the sidebar only appears from sm up.
+          (Previously the hidden sidebar still reserved a 130px grid track, which
+          crushed the main panel on phones.) */}
+      <div className="grid grid-cols-1 sm:grid-cols-[160px_1fr]">
+        {/* sidebar */}
+        <aside className="hidden flex-col gap-1.5 bg-brand-700 p-4 sm:flex">
+          <div className="mb-3 text-[0.62rem] font-700 uppercase tracking-[0.16em] text-brand-200">
+            GIS · Admin
+          </div>
+          {["Dashboard", "Beneficiaries", "Policies", "Claims", "Payments", "Reports", "Audit Log"].map(
+            (item, i) => (
+              <div
+                key={item}
+                className={`rounded-xl px-3 py-2 text-[0.74rem] font-500 ${
+                  i === 0 ? "bg-white text-brand-700" : "text-brand-100"
+                }`}
+              >
+                {item}
+              </div>
+            )
+          )}
+        </aside>
+
+        {/* main */}
+        <div className="bg-[#F7FAFE] p-4 sm:p-6">
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <div className="truncate text-sm font-700 text-ink">Scheme Overview</div>
+              <div className="truncate text-[0.66rem] text-muted">
+                Buldhana District · FY 2025–26
+              </div>
+            </div>
+            <div className="shrink-0 rounded-full bg-brand-600 px-3 py-1 text-[0.6rem] font-600 text-white">
+              ● LIVE
+            </div>
+          </div>
+
+          <div className="mt-5 grid grid-cols-3 gap-2.5 sm:gap-3">
+            {[
+              { k: "Beneficiaries", v: "48,210" },
+              { k: "Active Policies", v: "39,884" },
+              { k: "Claims (mo.)", v: "1,127" },
+            ].map((c) => (
+              <div key={c.k} className="rounded-2xl border border-hairline bg-white p-3">
+                <div className="text-sm font-800 text-brand-700 sm:text-base">{c.v}</div>
+                <div className="mt-0.5 text-[0.55rem] font-600 uppercase tracking-wide text-muted sm:text-[0.58rem]">
+                  {c.k}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-4 overflow-hidden rounded-2xl border border-hairline bg-white">
+            <div className="grid grid-cols-[1fr_1fr_auto] gap-2 border-b border-hairline px-3 py-2.5 text-[0.58rem] font-700 uppercase tracking-wide text-muted sm:px-4">
+              <span>Beneficiary</span>
+              <span>Policy</span>
+              <span>Status</span>
+            </div>
+            {[
+              { n: "R. Pawar", p: "GIS-HEALTH", s: "Approved", ok: true },
+              { n: "S. Deshmukh", p: "GIS-CROP", s: "In review", ok: false },
+              { n: "A. Khan", p: "GIS-HEALTH", s: "Approved", ok: true },
+            ].map((row) => (
+              <div
+                key={row.n}
+                className="grid grid-cols-[1fr_1fr_auto] items-center gap-2 border-b border-hairline px-3 py-2.5 text-[0.72rem] text-ink last:border-0 sm:px-4"
+              >
+                <span className="truncate font-600">{row.n}</span>
+                <span className="truncate text-[0.64rem] text-muted">{row.p}</span>
+                <span
+                  className={`whitespace-nowrap text-[0.6rem] font-600 ${
+                    row.ok ? "text-[#2F8F57]" : "text-brand-500"
+                  }`}
+                >
+                  ● {row.s}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+````
+
+## File: components/home/Hero.tsx
+````typescript
+"use client";
+
+import Link from "next/link";
+import { useEffect, useRef } from "react";
+import { ArrowRight } from "lucide-react";
+import { company, stats } from "@/lib/data";
+import HeroScene from "./HeroScene";
+
+export default function Hero() {
+  const root = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    let ctx: { revert: () => void } | undefined;
+    let active = true;
+
+    (async () => {
+      const { gsap } = await import("gsap");
+      if (!active) return;
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce) return;
+
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 0.8 } });
+        tl.from("[data-h='eyebrow']", { y: 18, opacity: 0 })
+          .from("[data-h='line']", { y: 30, opacity: 0, stagger: 0.12 }, "-=0.4")
+          .from("[data-h='intro']", { y: 18, opacity: 0 }, "-=0.5")
+          .from("[data-h='cta'] > *", { y: 16, opacity: 0, stagger: 0.1 }, "-=0.5")
+          .from("[data-h='scene']", { opacity: 0, scale: 0.92, duration: 1.1 }, "-=0.95")
+          .from("[data-h='stat']", { y: 22, opacity: 0, stagger: 0.09 }, "-=0.7");
+      }, root);
+    })();
+
+    return () => {
+      active = false;
+      ctx?.revert();
+    };
+  }, []);
+
+  return (
+    <section ref={root} className="relative overflow-hidden brand-gradient text-white">
+      <div className="pointer-events-none absolute inset-0 soft-dots opacity-50" aria-hidden />
+      <div
+        className="pointer-events-none absolute -right-32 top-10 h-96 w-96 rounded-full bg-white/10 blur-3xl animate-float"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-brand-400/30 blur-3xl"
+        aria-hidden
+      />
+
+      <div className="shell relative pb-20 pt-28 sm:pb-24 sm:pt-40">
+        <div className="grid items-center gap-10 lg:grid-cols-12">
+          {/* copy */}
+          <div className="lg:col-span-6">
+            <span data-h="eyebrow" className="eyebrow eyebrow-light">
+              Government &amp; Enterprise Software
+            </span>
+
+            <h1 className="mt-6 text-[1.95rem] font-800 leading-[1.08] [overflow-wrap:break-word] sm:text-5xl lg:text-[3.7rem]">
+              <span data-h="line" className="block">
+                Software that serves
+              </span>
+              <span data-h="line" className="block text-brand-200">
+                government and business.
+              </span>
+            </h1>
+
+            <p data-h="intro" className="mt-7 max-w-xl text-base leading-relaxed text-brand-100 sm:text-lg">
+              {company.shortName} designs and delivers custom systems for public
+              bodies and private companies — from a Government Insurance Scheme
+              platform live across five cities to the software your organisation
+              runs on every day.
+            </p>
+
+            <div
+              data-h="cta"
+              className="mt-10 flex w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4"
+            >
+              <Link
+                href="/contact"
+                className="btn w-full justify-center bg-white px-8 py-4 text-brand-700 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-brand-50 sm:w-auto"
+              >
+                Start a project <ArrowRight size={17} />
+              </Link>
+              <Link
+                href="/work"
+                className="btn-ghost w-full justify-center px-8 py-4 transition-transform duration-200 hover:-translate-y-0.5 sm:w-auto"
+              >
+                See our work
+              </Link>
+            </div>
+          </div>
+
+          {/* 3D scene fills what used to be empty space */}
+          <div data-h="scene" className="lg:col-span-6">
+            <div className="relative mx-auto aspect-square h-auto w-full max-w-[340px] overflow-hidden sm:max-w-[460px] lg:max-w-[520px]">
+              <div
+                className="pointer-events-none absolute inset-6 rounded-full bg-white/10 blur-3xl"
+                aria-hidden
+              />
+              <HeroScene />
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-14 grid grid-cols-2 gap-4 sm:mt-16 lg:grid-cols-4">
+          {stats.map((s) => (
+            <div
+              key={s.label}
+              data-h="stat"
+              className="rounded-3xl border border-white/15 bg-white/10 p-5 backdrop-blur-sm transition-all duration-200 hover:-translate-y-1 hover:border-white/30 hover:bg-white/15 sm:p-6"
+            >
+              <div className="text-2xl font-800 leading-tight text-white [overflow-wrap:anywhere] sm:text-3xl">
+                {s.value}
+              </div>
+              <div className="mt-2 text-sm leading-snug text-brand-100">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="absolute inset-x-0 bottom-0 h-12 rounded-t-[2.5rem] bg-white" aria-hidden />
+    </section>
+  );
+}
+````
+
+## File: components/home/HeroScene.tsx
+````typescript
+"use client";
+
+import { useEffect, useRef } from "react";
+
+/**
+ * Lightweight three.js scene for the hero: a rotating wireframe icosahedron
+ * wrapped in a particle shell, with 5 glowing "city" nodes connected in a ring
+ * — a nod to the GIS platform running across five cities.
+ *
+ * Responsiveness:
+ * - The canvas tracks its CONTAINER via ResizeObserver (not just window resize),
+ *   so it stays sharp and correctly sized through layout reflows, font loads,
+ *   orientation changes, and the grid switching between stacked / side-by-side.
+ * - Lighter particle count and pixel ratio on small screens.
+ * - three is dynamically imported (kept out of SSR / code-split).
+ * - Respects prefers-reduced-motion (renders a single static frame).
+ * - Everything is disposed on unmount to avoid WebGL context leaks.
+ */
+export default function HeroScene() {
+  const mountRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mount = mountRef.current;
+    if (!mount) return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const small = window.matchMedia("(max-width: 640px)").matches;
+
+    let renderer: any = null;
+    let frameId = 0;
+    let disposed = false;
+    const cleanups: Array<() => void> = [];
+
+    (async () => {
+      const THREE = await import("three");
+      if (disposed || !mountRef.current) return;
+      const el = mountRef.current;
+
+      const size = () => ({
+        w: Math.max(el.clientWidth, 1),
+        h: Math.max(el.clientHeight, 1),
+      });
+      let { w: width, h: height } = size();
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+      camera.position.set(0, 0, 6.4);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, small ? 1.5 : 2));
+      renderer.domElement.style.display = "block";
+      mount.appendChild(renderer.domElement);
+
+      const pivot = new THREE.Group(); // parallax
+      const spin = new THREE.Group(); // continuous rotation
+      pivot.add(spin);
+      scene.add(pivot);
+      spin.rotation.x = 0.35;
+
+      // faint solid core
+      const core = new THREE.Mesh(
+        new THREE.IcosahedronGeometry(1.8, 1),
+        new THREE.MeshBasicMaterial({ color: 0x2c5da8, transparent: true, opacity: 0.16 })
+      );
+      spin.add(core);
+
+      // wireframe
+      const wire = new THREE.LineSegments(
+        new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.85, 1)),
+        new THREE.LineBasicMaterial({ color: 0x9cc0ef, transparent: true, opacity: 0.5 })
+      );
+      spin.add(wire);
+
+      // particle shell (lighter on small screens)
+      const COUNT = small ? 380 : 650;
+      const positions = new Float32Array(COUNT * 3);
+      for (let i = 0; i < COUNT; i++) {
+        const r = 2.5 + Math.random() * 0.55;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+        positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+        positions[i * 3 + 2] = r * Math.cos(phi);
+      }
+      const ptsGeo = new THREE.BufferGeometry();
+      ptsGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      const points = new THREE.Points(
+        ptsGeo,
+        new THREE.PointsMaterial({
+          color: 0xdce8f8,
+          size: 0.035,
+          transparent: true,
+          opacity: 0.85,
+          sizeAttenuation: true,
+        })
+      );
+      spin.add(points);
+
+      // 5 city nodes
+      const nodes: any[] = [];
+      const nodeGeo = new THREE.SphereGeometry(0.07, 16, 16);
+      const nodeMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      const seeds = [
+        [1.8, 0.3, 0.4],
+        [-1.1, 1.3, 0.8],
+        [0.4, -1.6, 0.9],
+        [-1.4, -0.5, -1.1],
+        [0.9, 0.8, -1.5],
+      ];
+      seeds.forEach((s) => {
+        const m = new THREE.Mesh(nodeGeo, nodeMat);
+        m.position.set(s[0], s[1], s[2]).setLength(1.85);
+        spin.add(m);
+        nodes.push(m);
+      });
+
+      // ring connecting the nodes
+      const linePts: number[] = [];
+      for (let i = 0; i < nodes.length; i++) {
+        const a = nodes[i].position;
+        const b = nodes[(i + 1) % nodes.length].position;
+        linePts.push(a.x, a.y, a.z, b.x, b.y, b.z);
+      }
+      const lineGeo = new THREE.BufferGeometry();
+      lineGeo.setAttribute("position", new THREE.Float32BufferAttribute(linePts, 3));
+      const lines = new THREE.LineSegments(
+        lineGeo,
+        new THREE.LineBasicMaterial({ color: 0xbfd6f5, transparent: true, opacity: 0.55 })
+      );
+      spin.add(lines);
+
+      // pointer parallax (fine-pointer devices only)
+      const target = { x: 0, y: 0 };
+      if (!reduce && window.matchMedia("(pointer:fine)").matches) {
+        const onMove = (e: PointerEvent) => {
+          const rect = el.getBoundingClientRect();
+          target.x = ((e.clientX - rect.left) / rect.width - 0.5) * 0.7;
+          target.y = ((e.clientY - rect.top) / rect.height - 0.5) * 0.7;
+        };
+        window.addEventListener("pointermove", onMove);
+        cleanups.push(() => window.removeEventListener("pointermove", onMove));
+      }
+
+      // keep the canvas locked to the container's real size
+      const onResize = () => {
+        const s = size();
+        if (s.w === width && s.h === height) return;
+        width = s.w;
+        height = s.h;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+        render();
+      };
+
+      let ro: ResizeObserver | null = null;
+      if (typeof ResizeObserver !== "undefined") {
+        ro = new ResizeObserver(onResize);
+        ro.observe(el);
+        cleanups.push(() => ro?.disconnect());
+      }
+      window.addEventListener("resize", onResize);
+      cleanups.push(() => window.removeEventListener("resize", onResize));
+
+      const clock = new THREE.Clock();
+      const render = () => renderer.render(scene, camera);
+
+      if (reduce) {
+        render();
+      } else {
+        const loop = () => {
+          frameId = requestAnimationFrame(loop);
+          const t = clock.getElapsedTime();
+          spin.rotation.y += 0.0018;
+          pivot.rotation.x += (target.y * 0.5 - pivot.rotation.x) * 0.05;
+          pivot.rotation.y += (target.x * 0.5 - pivot.rotation.y) * 0.05;
+          nodes.forEach((m, i) => m.scale.setScalar(1 + Math.sin(t * 2 + i) * 0.28));
+          render();
+        };
+        loop();
+      }
+
+      // dispose helpers
+      cleanups.push(() => {
+        scene.traverse((obj: any) => {
+          if (obj.geometry) obj.geometry.dispose();
+          if (obj.material) {
+            const m = obj.material;
+            Array.isArray(m) ? m.forEach((x: any) => x.dispose()) : m.dispose();
+          }
+        });
+      });
+    })();
+
+    return () => {
+      disposed = true;
+      cancelAnimationFrame(frameId);
+      cleanups.forEach((fn) => fn());
+      if (renderer) {
+        renderer.dispose();
+        const el = renderer.domElement;
+        if (el && el.parentNode) el.parentNode.removeChild(el);
+      }
+    };
+  }, []);
+
+  return <div ref={mountRef} className="h-full w-full" aria-hidden />;
+}
+````
+
+## File: components/ui/CTABand.tsx
+````typescript
+"use client";
+
+import { useEffect, useRef } from "react";
+
+/**
+ * Lightweight three.js scene for the hero: a rotating wireframe icosahedron
+ * wrapped in a particle shell, with 5 glowing "city" nodes connected in a ring
+ * — a nod to the GIS platform running across five cities.
+ *
+ * Responsiveness:
+ * - The canvas tracks its CONTAINER via ResizeObserver (not just window resize),
+ *   so it stays sharp and correctly sized through layout reflows, font loads,
+ *   orientation changes, and the grid switching between stacked / side-by-side.
+ * - Lighter particle count and pixel ratio on small screens.
+ * - three is dynamically imported (kept out of SSR / code-split).
+ * - Respects prefers-reduced-motion (renders a single static frame).
+ * - Everything is disposed on unmount to avoid WebGL context leaks.
+ */
+export default function HeroScene() {
+  const mountRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mount = mountRef.current;
+    if (!mount) return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const small = window.matchMedia("(max-width: 640px)").matches;
+
+    let renderer: any = null;
+    let frameId = 0;
+    let disposed = false;
+    const cleanups: Array<() => void> = [];
+
+    (async () => {
+      const THREE = await import("three");
+      if (disposed || !mountRef.current) return;
+      const el = mountRef.current;
+
+      const size = () => ({
+        w: Math.max(el.clientWidth, 1),
+        h: Math.max(el.clientHeight, 1),
+      });
+      let { w: width, h: height } = size();
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+      camera.position.set(0, 0, 6.4);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, small ? 1.5 : 2));
+      renderer.domElement.style.display = "block";
+      mount.appendChild(renderer.domElement);
+
+      const pivot = new THREE.Group(); // parallax
+      const spin = new THREE.Group(); // continuous rotation
+      pivot.add(spin);
+      scene.add(pivot);
+      spin.rotation.x = 0.35;
+
+      // faint solid core
+      const core = new THREE.Mesh(
+        new THREE.IcosahedronGeometry(1.8, 1),
+        new THREE.MeshBasicMaterial({ color: 0x2c5da8, transparent: true, opacity: 0.16 })
+      );
+      spin.add(core);
+
+      // wireframe
+      const wire = new THREE.LineSegments(
+        new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.85, 1)),
+        new THREE.LineBasicMaterial({ color: 0x9cc0ef, transparent: true, opacity: 0.5 })
+      );
+      spin.add(wire);
+
+      // particle shell (lighter on small screens)
+      const COUNT = small ? 380 : 650;
+      const positions = new Float32Array(COUNT * 3);
+      for (let i = 0; i < COUNT; i++) {
+        const r = 2.5 + Math.random() * 0.55;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos(2 * Math.random() - 1);
+        positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+        positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+        positions[i * 3 + 2] = r * Math.cos(phi);
+      }
+      const ptsGeo = new THREE.BufferGeometry();
+      ptsGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      const points = new THREE.Points(
+        ptsGeo,
+        new THREE.PointsMaterial({
+          color: 0xdce8f8,
+          size: 0.035,
+          transparent: true,
+          opacity: 0.85,
+          sizeAttenuation: true,
+        })
+      );
+      spin.add(points);
+
+      // 5 city nodes
+      const nodes: any[] = [];
+      const nodeGeo = new THREE.SphereGeometry(0.07, 16, 16);
+      const nodeMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      const seeds = [
+        [1.8, 0.3, 0.4],
+        [-1.1, 1.3, 0.8],
+        [0.4, -1.6, 0.9],
+        [-1.4, -0.5, -1.1],
+        [0.9, 0.8, -1.5],
+      ];
+      seeds.forEach((s) => {
+        const m = new THREE.Mesh(nodeGeo, nodeMat);
+        m.position.set(s[0], s[1], s[2]).setLength(1.85);
+        spin.add(m);
+        nodes.push(m);
+      });
+
+      // ring connecting the nodes
+      const linePts: number[] = [];
+      for (let i = 0; i < nodes.length; i++) {
+        const a = nodes[i].position;
+        const b = nodes[(i + 1) % nodes.length].position;
+        linePts.push(a.x, a.y, a.z, b.x, b.y, b.z);
+      }
+      const lineGeo = new THREE.BufferGeometry();
+      lineGeo.setAttribute("position", new THREE.Float32BufferAttribute(linePts, 3));
+      const lines = new THREE.LineSegments(
+        lineGeo,
+        new THREE.LineBasicMaterial({ color: 0xbfd6f5, transparent: true, opacity: 0.55 })
+      );
+      spin.add(lines);
+
+      // pointer parallax (fine-pointer devices only)
+      const target = { x: 0, y: 0 };
+      if (!reduce && window.matchMedia("(pointer:fine)").matches) {
+        const onMove = (e: PointerEvent) => {
+          const rect = el.getBoundingClientRect();
+          target.x = ((e.clientX - rect.left) / rect.width - 0.5) * 0.7;
+          target.y = ((e.clientY - rect.top) / rect.height - 0.5) * 0.7;
+        };
+        window.addEventListener("pointermove", onMove);
+        cleanups.push(() => window.removeEventListener("pointermove", onMove));
+      }
+
+      // keep the canvas locked to the container's real size
+      const onResize = () => {
+        const s = size();
+        if (s.w === width && s.h === height) return;
+        width = s.w;
+        height = s.h;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+        render();
+      };
+
+      let ro: ResizeObserver | null = null;
+      if (typeof ResizeObserver !== "undefined") {
+        ro = new ResizeObserver(onResize);
+        ro.observe(el);
+        cleanups.push(() => ro?.disconnect());
+      }
+      window.addEventListener("resize", onResize);
+      cleanups.push(() => window.removeEventListener("resize", onResize));
+
+      const clock = new THREE.Clock();
+      const render = () => renderer.render(scene, camera);
+
+      if (reduce) {
+        render();
+      } else {
+        const loop = () => {
+          frameId = requestAnimationFrame(loop);
+          const t = clock.getElapsedTime();
+          spin.rotation.y += 0.0018;
+          pivot.rotation.x += (target.y * 0.5 - pivot.rotation.x) * 0.05;
+          pivot.rotation.y += (target.x * 0.5 - pivot.rotation.y) * 0.05;
+          nodes.forEach((m, i) => m.scale.setScalar(1 + Math.sin(t * 2 + i) * 0.28));
+          render();
+        };
+        loop();
+      }
+
+      // dispose helpers
+      cleanups.push(() => {
+        scene.traverse((obj: any) => {
+          if (obj.geometry) obj.geometry.dispose();
+          if (obj.material) {
+            const m = obj.material;
+            Array.isArray(m) ? m.forEach((x: any) => x.dispose()) : m.dispose();
+          }
+        });
+      });
+    })();
+
+    return () => {
+      disposed = true;
+      cancelAnimationFrame(frameId);
+      cleanups.forEach((fn) => fn());
+      if (renderer) {
+        renderer.dispose();
+        const el = renderer.domElement;
+        if (el && el.parentNode) el.parentNode.removeChild(el);
+      }
+    };
+  }, []);
+
+  return <div ref={mountRef} className="h-full w-full" aria-hidden />;
+}
+````
+
+## File: components/ui/PageHeader.tsx
+````typescript
+import Reveal from "@/components/Reveal";
+
+export default function PageHeader({
+  eyebrow,
+  title,
+  intro,
+}: {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+}) {
+  return (
+    <header className="relative overflow-hidden brand-gradient text-white">
+      <div className="pointer-events-none absolute inset-0 soft-dots opacity-50" aria-hidden />
+      <div
+        className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-white/10 blur-3xl"
+        aria-hidden
+      />
+      <div className="shell relative pb-16 pt-28 sm:pb-24 sm:pt-40">
+        <Reveal className="max-w-3xl">
+          <span className="eyebrow eyebrow-light">{eyebrow}</span>
+          <h1 className="mt-5 text-3xl font-800 leading-[1.1] [overflow-wrap:break-word] sm:text-5xl lg:text-6xl">
+            {title}
+          </h1>
+          {intro && (
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-brand-100 sm:text-lg">
+              {intro}
+            </p>
+          )}
+        </Reveal>
+      </div>
+      {/* smooth curved base */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-10 rounded-t-[2.5rem] bg-white"
+        aria-hidden
+      />
+    </header>
+  );
 }
 ````
