@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --shell-px: clamp(20px, 5vw, 44px);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white text-ink font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: theme("colors.brand.600");
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid theme("colors.brand.500");
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  h1, h2, h3 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell;
+    padding-left: var(--shell-px);
+    padding-right: var(--shell-px);
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2.5 text-xs font-700 uppercase tracking-[0.18em] text-brand-600;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply h-1.5 w-1.5 rounded-full bg-brand-500;
+  }
+  .eyebrow-light {
+    @apply text-brand-100;
+  }
+  .eyebrow-light::before {
+    @apply bg-brand-200;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full text-[0.92rem] font-600 transition-all duration-200;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 px-7 py-3.5 text-white shadow-soft hover:bg-brand-700 hover:shadow-lift;
+  }
+  .btn-soft {
+    @apply btn border border-hairline bg-white px-7 py-3.5 text-ink hover:border-brand-200 hover:bg-brand-50;
+  }
+  .btn-ghost {
+    @apply btn border border-white/35 px-7 py-3.5 text-white hover:bg-white hover:text-brand-700;
+  }
+
+  .card {
+    @apply rounded-4xl border border-hairline bg-white shadow-card;
+  }
+}
+
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  .brand-gradient {
+    background-image: linear-gradient(135deg, #2C5DA8 0%, #244C8A 55%, #1E3F70 100%);
+  }
+  .soft-dots {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1.4px, transparent 1.4px);
+    background-size: 26px 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .animate-float {
+    animation: none !important;
+  }
+}
