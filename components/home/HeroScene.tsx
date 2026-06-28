@@ -7,9 +7,13 @@ import { useEffect, useRef } from "react";
  * wrapped in a particle shell, with 5 glowing "city" nodes connected in a ring
  * — a nod to the GIS platform running across five cities.
  *
- * - three is dynamically imported inside the effect (kept out of SSR / code-split).
+ * Responsiveness:
+ * - The canvas tracks its CONTAINER via ResizeObserver (not just window resize),
+ *   so it stays sharp and correctly sized through layout reflows, font loads,
+ *   orientation changes, and the grid switching between stacked / side-by-side.
+ * - Lighter particle count and pixel ratio on small screens.
+ * - three is dynamically imported (kept out of SSR / code-split).
  * - Respects prefers-reduced-motion (renders a single static frame).
- * - Pointer parallax on fine-pointer devices.
  * - Everything is disposed on unmount to avoid WebGL context leaks.
  */
 export default function HeroScene() {
@@ -20,6 +24,7 @@ export default function HeroScene() {
     if (!mount) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const small = window.matchMedia("(max-width: 640px)").matches;
 
     let renderer: any = null;
     let frameId = 0;
@@ -28,10 +33,14 @@ export default function HeroScene() {
 
     (async () => {
       const THREE = await import("three");
-      if (disposed) return;
+      if (disposed || !mountRef.current) return;
+      const el = mountRef.current;
 
-      const width = mount.clientWidth || 1;
-      const height = mount.clientHeight || 1;
+      const size = () => ({
+        w: Math.max(el.clientWidth, 1),
+        h: Math.max(el.clientHeight, 1),
+      });
+      let { w: width, h: height } = size();
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
@@ -39,7 +48,7 @@ export default function HeroScene() {
 
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, small ? 1.5 : 2));
       renderer.domElement.style.display = "block";
       mount.appendChild(renderer.domElement);
 
@@ -63,8 +72,8 @@ export default function HeroScene() {
       );
       spin.add(wire);
 
-      // particle shell
-      const COUNT = 650;
+      // particle shell (lighter on small screens)
+      const COUNT = small ? 380 : 650;
       const positions = new Float32Array(COUNT * 3);
       for (let i = 0; i < COUNT; i++) {
         const r = 2.5 + Math.random() * 0.55;
@@ -121,11 +130,11 @@ export default function HeroScene() {
       );
       spin.add(lines);
 
-      // pointer parallax
+      // pointer parallax (fine-pointer devices only)
       const target = { x: 0, y: 0 };
-      if (!reduce) {
+      if (!reduce && window.matchMedia("(pointer:fine)").matches) {
         const onMove = (e: PointerEvent) => {
-          const rect = mount.getBoundingClientRect();
+          const rect = el.getBoundingClientRect();
           target.x = ((e.clientX - rect.left) / rect.width - 0.5) * 0.7;
           target.y = ((e.clientY - rect.top) / rect.height - 0.5) * 0.7;
         };
@@ -133,13 +142,24 @@ export default function HeroScene() {
         cleanups.push(() => window.removeEventListener("pointermove", onMove));
       }
 
+      // keep the canvas locked to the container's real size
       const onResize = () => {
-        const w = mount.clientWidth || 1;
-        const h = mount.clientHeight || 1;
-        camera.aspect = w / h;
+        const s = size();
+        if (s.w === width && s.h === height) return;
+        width = s.w;
+        height = s.h;
+        camera.aspect = width / height;
         camera.updateProjectionMatrix();
-        renderer.setSize(w, h);
+        renderer.setSize(width, height);
+        render();
       };
+
+      let ro: ResizeObserver | null = null;
+      if (typeof ResizeObserver !== "undefined") {
+        ro = new ResizeObserver(onResize);
+        ro.observe(el);
+        cleanups.push(() => ro?.disconnect());
+      }
       window.addEventListener("resize", onResize);
       cleanups.push(() => window.removeEventListener("resize", onResize));
 
