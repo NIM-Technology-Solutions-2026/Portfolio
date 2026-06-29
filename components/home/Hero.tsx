@@ -91,11 +91,11 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* 3D scene fills what used to be empty space */}
+          {/* 3D scene — no overflow-hidden so the masked edges melt into the hero */}
           <div data-h="scene" className="lg:col-span-6">
-            <div className="relative mx-auto aspect-square h-auto w-full max-w-[340px] overflow-hidden sm:max-w-[460px] lg:max-w-[520px]">
+            <div className="relative mx-auto aspect-square h-auto w-full max-w-[340px] sm:max-w-[460px] lg:max-w-[520px]">
               <div
-                className="pointer-events-none absolute inset-6 rounded-full bg-white/10 blur-3xl"
+                className="pointer-events-none absolute inset-4 rounded-full bg-white/10 blur-3xl"
                 aria-hidden
               />
               <HeroScene />
