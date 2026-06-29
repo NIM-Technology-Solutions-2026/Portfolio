@@ -18,7 +18,7 @@ const body = Inter({
   display: "swap",
 });
 
-const siteUrl = "https://nimtechsolutions.com";
+const siteUrl = "https://nimtechsol.com";
 const siteDescription =
   "NIM Technology Solutions builds custom software for government bodies and private companies — engineered for quality and built around service.";
 

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/lib/data";
 
-const siteUrl = "https://nimtechsolutions.com";
+const siteUrl = "https://nimtechsol.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
