@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Get in touch with NIM Technology Solutions about a government or enterprise software project.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

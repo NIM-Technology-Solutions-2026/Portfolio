@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "NIM Technology Solutions is a software company serving government organisations and private enterprises — built on quality and service.",
+  alternates: { canonical: "/about" },
 };
 
 const team = [

@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Services",
   description:
     "Custom software, web and mobile apps, government systems, cloud, security, AI, and ongoing support from NIM Technology Solutions.",
+  alternates: { canonical: "/services" },
 };
 
 export default function ServicesPage() {

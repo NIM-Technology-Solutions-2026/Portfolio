@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { company } from "@/lib/data";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const display = Plus_Jakarta_Sans({
@@ -18,11 +19,12 @@ const body = Inter({
   display: "swap",
 });
 
-const siteUrl = "https://nimtechsol.com";
 const siteDescription =
   "NIM Technology Solutions builds custom software for government bodies and private companies — engineered for quality and built around service.";
 
 export const metadata: Metadata = {
+  // metadataBase makes every per-page canonical resolve to an ABSOLUTE URL on
+  // the primary domain — essential so the .com domain still canonicals to .in.
   metadataBase: new URL(siteUrl),
   title: {
     default: `${company.name} — Software for Government & Enterprise`,
@@ -47,9 +49,9 @@ export const metadata: Metadata = {
   creator: company.name,
   publisher: company.name,
   category: "technology",
-  alternates: {
-    canonical: "/",
-  },
+  // NOTE: canonical is intentionally NOT set here. Each page sets its own
+  // canonical to its real path (see app/<route>/page.tsx), so subpages don't
+  // all inherit "/".
   robots: {
     index: true,
     follow: true,

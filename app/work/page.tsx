@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Work",
   description:
     "Selected projects from NIM Technology Solutions, including the Government Insurance Scheme (GIS) platform deployed across five cities.",
+  alternates: { canonical: "/work" },
 };
 
 export default function WorkPage() {

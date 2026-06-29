@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Industries",
   description:
     "NIM Technology Solutions builds software across government, insurance, finance, healthcare, education, and more.",
+  alternates: { canonical: "/industries" },
 };
 
 export default function IndustriesPage() {

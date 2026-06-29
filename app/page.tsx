@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import Hero from "@/components/home/Hero";
@@ -6,6 +7,10 @@ import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import CTABand from "@/components/ui/CTABand";
 import { services, industries, projects } from "@/lib/data";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   const featured = projects[0];
